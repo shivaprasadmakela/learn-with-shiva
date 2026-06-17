@@ -1,0 +1,336 @@
+/* CourseDetail.module.css */
+
+.container {
+    background-color: var(--bg-primary);
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+.toolbar {
+    height: 56px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.backBtn:hover {
+    color: var(--google-blue);
+}
+
+/* Hero Banner */
+.heroBanner {
+    background-color: var(--bg-secondary);
+    padding: 64px 24px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.heroContent {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--accent-blue-light);
+    color: var(--google-blue);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+}
+
+.title {
+    font-family: var(--font-family-display);
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 800px;
+}
+
+.metaGrid {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 640px) {
+    .metaGrid {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+}
+
+/* Syllabus Grid layout */
+.mainLayout {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.sectionTitle {
+    font-family: var(--font-family-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.sectionSubtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 32px;
+    margin-top: -16px;
+}
+
+/* What you master grid */
+.skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .skillsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skillItem {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.skillNumber {
+    font-family: var(--font-family-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--google-blue);
+    line-height: 1;
+}
+
+.skillTitle {
+    font-family: var(--font-family-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.skillDesc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Syllabus items list */
+.modulesList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.moduleWrapper {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    transition: border-color var(--transition-normal);
+}
+
+.moduleHeader {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--transition-fast);
+}
+
+.moduleHeader:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.moduleHeaderLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.moduleIndex {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--google-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.moduleTitle {
+    font-family: var(--font-family-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.moduleHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+.lessonCount {
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+/* Lessons inside modules */
+.lessonsList {
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.lessonItem {
+    padding: 16px 24px 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color-light);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.lessonItem:last-child {
+    border-bottom: none;
+}
+
+.lessonItem:hover {
+    background-color: var(--bg-secondary);
+}
+
+.lessonItemLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.statusIndicator {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+}
+
+.completedIndicator {
+    color: var(--google-green);
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-tertiary);
+}
+
+.lessonTitle {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.lessonItemRight {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.scoreTag {
+    background-color: rgba(52, 168, 83, 0.08);
+    color: var(--google-green);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.duration {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.startBtn {
+    background-color: transparent;
+    color: var(--google-blue);
+    border: 1px solid var(--border-color);
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.lessonItem:hover .startBtn {
+    background-color: var(--google-blue);
+    color: #ffffff;
+    border-color: var(--google-blue);
+}
+
+.loading {
+    padding: 100px;
+    text-align: center;
+    color: var(--text-secondary);
+}

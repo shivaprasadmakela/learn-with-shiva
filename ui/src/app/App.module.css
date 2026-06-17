@@ -1,0 +1,52 @@
+/* App.module.css */
+
+.appRoot {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+}
+
+.errorBanner {
+    background-color: var(--google-red);
+    color: #ffffff;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    gap: 16px;
+    font-family: var(--font-family-display);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-bottom-color: var(--google-blue);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 0.8s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

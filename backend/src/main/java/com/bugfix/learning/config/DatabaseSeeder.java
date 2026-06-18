@@ -2,6 +2,8 @@ package com.bugfix.learning.config;
 
 import com.bugfix.learning.entity.*;
 import com.bugfix.learning.repository.*;
+import com.bugfix.profile.entity.UserProfile;
+import com.bugfix.profile.repository.UserProfileRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

@@ -43,60 +43,65 @@ export const useLearning = () => {
         }
     }, []);
 
-    // Sync React state with URL hash (Routing)
-    useEffect(() => {
-        const handleHashChange = async () => {
-            const hash = window.location.hash;
-            setError(null);
-            
-            try {
-                if (!hash || hash === '#/' || hash === '#') {
-                    setActiveView('HOME');
-                } else if (hash === '#/dashboard') {
-                    setActiveView('DASHBOARD');
-                } else if (hash === '#/certificate') {
-                    setActiveView('CERTIFICATE');
-                } else if (hash.startsWith('#/course/')) {
-                    const courseId = parseInt(hash.replace('#/course/', ''), 10);
-                    if (!isNaN(courseId)) {
-                        setIsLoading(true);
-                        const courseDetails = await api.fetchCourseDetails(courseId);
-                        setCurrentCourse(courseDetails);
-                        setActiveView('COURSE_DETAIL');
-                    }
-                } else if (hash.startsWith('#/lesson/')) {
-                    const lessonId = parseInt(hash.replace('#/lesson/', ''), 10);
-                    if (!isNaN(lessonId)) {
-                        setIsLoading(true);
-                        const lessonDetails = await api.fetchLesson(lessonId);
-                        setActiveLesson(lessonDetails);
-                        
-                        // Ensure we have currentCourse details loaded for syllabus structure
-                        if (!currentCourse || currentCourse.id !== 1) {
-                            const courseDetails = await api.fetchCourseDetails(1);
-                            setCurrentCourse(courseDetails);
-                        }
-                        setActiveView('LESSON_READER');
-                    }
+    // Sync React state with URL path (Routing)
+    const handlePathChange = useCallback(async () => {
+        const path = window.location.pathname;
+        setError(null);
+        
+        try {
+            if (!path || path === '/' || path === '') {
+                setActiveView('HOME');
+            } else if (path === '/dashboard') {
+                setActiveView('DASHBOARD');
+            } else if (path === '/certificate') {
+                setActiveView('CERTIFICATE');
+            } else if (path.startsWith('/course/')) {
+                const courseId = parseInt(path.replace('/course/', ''), 10);
+                if (!isNaN(courseId)) {
+                    setIsLoading(true);
+                    const courseDetails = await api.fetchCourseDetails(courseId);
+                    setCurrentCourse(courseDetails);
+                    setActiveView('COURSE_DETAIL');
                 }
-            } catch (err: any) {
-                console.error('Routing failed:', err);
-                setError(err.message || 'Failed to navigate to route');
-            } finally {
-                setIsLoading(false);
+            } else if (path.startsWith('/lesson/')) {
+                const lessonId = parseInt(path.replace('/lesson/', ''), 10);
+                if (!isNaN(lessonId)) {
+                    setIsLoading(true);
+                    const lessonDetails = await api.fetchLesson(lessonId);
+                    setActiveLesson(lessonDetails);
+                    
+                    // Ensure we have currentCourse details loaded for syllabus structure
+                    if (!currentCourse || currentCourse.id !== 1) {
+                        const courseDetails = await api.fetchCourseDetails(1);
+                        setCurrentCourse(courseDetails);
+                    }
+                    setActiveView('LESSON_READER');
+                }
             }
-        };
+        } catch (err: any) {
+            console.error('Routing failed:', err);
+            setError(err.message || 'Failed to navigate to route');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [currentCourse]);
 
+    const navigate = useCallback((path: string) => {
+        window.history.pushState(null, '', path);
+        handlePathChange();
+    }, [handlePathChange]);
+
+    useEffect(() => {
         // Run once initially when initial data is loaded
         if (courses.length > 0) {
-            handleHashChange();
+            handlePathChange();
         }
 
-        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('popstate', handlePathChange);
         return () => {
-            window.removeEventListener('hashchange', handleHashChange);
+            window.removeEventListener('popstate', handlePathChange);
         };
-    }, [courses, currentCourse]);
+    }, [courses, handlePathChange]);
 
     useEffect(() => {
         loadInitialData();
@@ -108,26 +113,26 @@ export const useLearning = () => {
     }, [loadInitialData]);
 
     const selectCourse = useCallback(async (courseId: number) => {
-        window.location.hash = `#/course/${courseId}`;
-    }, []);
+        navigate(`/course/${courseId}`);
+    }, [navigate]);
 
     const selectLesson = useCallback(async (lessonId: number) => {
-        window.location.hash = `#/lesson/${lessonId}`;
-    }, []);
+        navigate(`/lesson/${lessonId}`);
+    }, [navigate]);
 
     const changeView = useCallback((view: ViewState) => {
-        if (view === 'HOME') window.location.hash = '#/';
-        else if (view === 'DASHBOARD') window.location.hash = '#/dashboard';
-        else if (view === 'CERTIFICATE') window.location.hash = '#/certificate';
+        if (view === 'HOME') navigate('/');
+        else if (view === 'DASHBOARD') navigate('/dashboard');
+        else if (view === 'CERTIFICATE') navigate('/certificate');
         else if (view === 'COURSE_DETAIL') {
-            if (currentCourse) window.location.hash = `#/course/${currentCourse.id}`;
-            else window.location.hash = '#/';
+            if (currentCourse) navigate(`/course/${currentCourse.id}`);
+            else navigate('/');
         }
         else if (view === 'LESSON_READER') {
-            if (activeLesson) window.location.hash = `#/lesson/${activeLesson.id}`;
-            else window.location.hash = '#/';
+            if (activeLesson) navigate(`/lesson/${activeLesson.id}`);
+            else navigate('/');
         }
-    }, [currentCourse, activeLesson]);
+    }, [navigate, currentCourse, activeLesson]);
 
     const markLessonCompleted = async (lessonId: number) => {
         try {
@@ -169,7 +174,7 @@ export const useLearning = () => {
             await api.resetProgress();
             const freshProgress = await api.fetchProgress();
             setProgress(freshProgress);
-            window.location.hash = '#/';
+            navigate('/');
             setCurrentCourse(null);
             setActiveLesson(null);
         } catch (err: any) {
